@@ -16,6 +16,11 @@ from .models import Category, Product, Commande
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
 def login(request):
     context = {}
     return render(request, 'login.html',context)
@@ -98,7 +103,14 @@ def confimation(request):
     info = Commande.objects.all()[:1]
     for item in info:
         nom = item.nom
+<<<<<<< HEAD
     return render(request, 'shop/confirmation.html', {'name': nom})          
+=======
+    return render(request, 'shop/confirmation.html', {'name': nom}) 
+
+#CRUD
+         
+>>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
 
 
 

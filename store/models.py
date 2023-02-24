@@ -15,11 +15,20 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+<<<<<<< HEAD
+=======
+    
+>>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
     title = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
     category = ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
+<<<<<<< HEAD
     image = models.CharField(max_length=5000)
+=======
+    #image = models.CharField(max_length=5000)
+    image = models.ImageField(upload_to='images/', default='images/default.png')
+>>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
     date_added = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['-date_added']  
