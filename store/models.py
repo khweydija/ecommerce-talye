@@ -15,11 +15,13 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    
     title = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
     category = ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
-    image = models.CharField(max_length=5000)
+    #image = models.CharField(max_length=5000)
+    image = models.ImageField(upload_to='images/', default='images/default.png')
     date_added = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['-date_added']  
