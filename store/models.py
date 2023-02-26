@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from django.db import models
@@ -15,13 +16,12 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    
+   # user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete= models.CASCADE)
     title = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
     category = ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
-    #image = models.CharField(max_length=5000)
-    image = models.ImageField(upload_to='images/', default='images/default.png')
+    image = models.ImageField(upload_to='media/images/', default='media/images/default.png')
     date_added = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['-date_added']  
@@ -46,5 +46,10 @@ class Commande(models.Model):
 
     def __str__(self):
         return self.nom  
+    
+    
+    
+
+
 
 # Create your models here.

@@ -22,6 +22,10 @@ def login(request):
     context = {}
     return render(request, 'login.html',context)
 
+def CRUD(request):
+    context = {}
+    return render(request, 'CRUD/indexx.html',context)
+
 
 def registre(request):
     form = CreateNewUser()

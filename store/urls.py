@@ -13,6 +13,7 @@ urlpatterns = [
     path('register/' ,views.registre, name="register"),
     path('login/' ,views.Userlogin, name="login"),
     path('logout/' ,views.Userlogout, name="logout"),
+    path('indexx/',views.CRUD,name="indexx"),
 ]
 
     
