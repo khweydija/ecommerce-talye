@@ -67,3 +67,4 @@ class Commande(models.Model):
 
 
 
+#entaaaaa eeeehhhhhhhhhhhh
