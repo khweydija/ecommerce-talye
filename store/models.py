@@ -58,3 +58,4 @@ class Commande(models.Model):
         return self.nom  
 
 
+#entaaaaa eeeehhhhhhhhhhhh
