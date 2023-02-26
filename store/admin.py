@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Category, Product, Commande
+from .models import Category, Product, Commande, Fournisseur
 
 admin.site.site_header = "E-commerce"
 admin.site.site_title = "Tsew9"
@@ -24,7 +24,7 @@ class AdminCommande(admin.ModelAdmin):
 admin.site.register(Product, AdminProduct)
 admin.site.register(Category, AdminCategorie)
 admin.site.register(Commande, AdminCommande)
-
+admin.site.register(Fournisseur)
 # Register your models here.
 
 # Register your models here.

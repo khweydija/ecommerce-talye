@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate  ,logout
 from django.contrib.auth import login as mylogin
 
 #lile models
-from .models import Category, Product, Commande
+from .models import Category, Product, Commande, Fournisseur
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
@@ -57,7 +57,26 @@ def Userlogin(request):
 
         return render(request , 'login.html', context )
     
-    
+
+def Frnlogin(request):  
+  
+        if request.method == 'POST': 
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(username=username, password=password)
+            try:
+                frn = Fournisseur.objects.get(user=user)
+                if user is not None:
+                    print("is  mewjud")
+                    mylogin(request, user)
+                    return redirect('home')
+                else:
+                    messages.info(request, 'le fournisseur pas ici wallahi error')
+            except:
+                print("frn mahu 5alg")
+                messages.info(request, 'le fournisseur pas ici wallahi error')
+        context = {}
+        return render(request , 'login.html', context ) 
     
 
 def Userlogout(request):  
