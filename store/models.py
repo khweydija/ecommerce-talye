@@ -1,9 +1,19 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 
-# Create your models here.
+
+class Fournisseur(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    telephone = models.CharField(max_length=20)
+    adresse = models.CharField(max_length=200)
+    ville = models.CharField(max_length=100)
+    pays = models.CharField(max_length=100)
+    nomboutique = models.CharField(max_length=200)
+    def _str_(self):
+        return self.nom
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now=True)
@@ -15,20 +25,13 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-<<<<<<< HEAD
-=======
-    
->>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
+    fournisseur = models.ForeignKey(Fournisseur, on_delete=models.CASCADE) 
     title = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
-    category = ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
-<<<<<<< HEAD
-    image = models.CharField(max_length=5000)
-=======
+    category = models.ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
     #image = models.CharField(max_length=5000)
     image = models.ImageField(upload_to='images/', default='images/default.png')
->>>>>>> d33b48dafc6c5a03b7909521a3a27fc77a9b5f84
     date_added = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['-date_added']  
@@ -54,4 +57,4 @@ class Commande(models.Model):
     def __str__(self):
         return self.nom  
 
-# Create your models here.
+
