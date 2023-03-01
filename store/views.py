@@ -6,25 +6,89 @@ from django.shortcuts import redirect, render
 
 #lile user
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateNewUser
+from .forms import CreateNewUser, ProdForm
 from django.contrib import messages
 from django.contrib.auth import authenticate  ,logout
 from django.contrib.auth import login as mylogin
 
 #lile models
-from .models import Category, Product, Commande, Fournisseur
+from .models import *
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
 
+#lilte CRUD
+from django.http import HttpResponse
+from django.contrib import messages
 
-def login(request):
-    context = {}
-    return render(request, 'login.html',context)
 
-def CRUD(request):
-    context = {}
-    return render(request, 'CRUD/indexx.html',context)
+#ya lembarkin ha4iiiiiiiiii CRUD lmesrugue
+
+def affiche(request):
+    prod = Product.objects.order_by('-id')
+    return render(request, 'CRUD/indexx.html', {'prod':prod})
+
+
+def delete_produit(request, id):
+     prod = Product.objects.get(id=id)
+     prod.delete()
+     # After the operation was Deleted
+     messages.success(request, 'Deleted successful!')
+     return redirect("/indexx")
+
+
+def modifier(requst, id):
+    prod = Product.objects.get(id=id)
+    return render(requst, 'CRUD/edit.html',{'prod':prod})
+
+
+def update_produit(request, id):
+     prod = Product.objects.get(id=id)
+     if request.method == "POST" :
+        form =  ProdForm(request.POST, request.FILES, instance = prod)
+        if form.is_valid():
+            form.save()
+            # After the operation was Update
+            messages.success(request, 'Update successful!')
+            # redirect to some other page
+            return redirect("/indexx")
+        # After the operation was fail
+        message = 'Something we are wrong!'
+        return render(request, 'CRUD/edit.html',{'message':message,'prod':form})
+     else:
+         form = Product.objects.get(id=id)
+         prod = ProdForm(instance = form)
+         content = {'prod':prod,'id':id}
+         return render(request, 'CRUD/edit.html',content)
+
+
+
+def create_produit(request):
+    form = ProdForm()
+    # The request method 'POST' indicates
+    # that the form was submitted
+    if request.method == "POST":
+        # Create a form instance with the submitted data
+        form = ProdForm(request.POST, request.FILES)
+        # Validate the form
+
+        if form.is_valid():
+            try:
+                form.save()
+                # After the operation was successful
+                messages.success(request, "Created successful!")
+                # redirect to some other page
+                return redirect('/indexx')
+            except:
+                message = "Something we are wrong!"
+                form = ProdForm()
+            return render(request, 'CRUD/create.html',{'message':message,'form':form})
+    else:
+        # Create an empty form instance
+        form = ProdForm()
+    return render(request, 'CRUD/create.html',{'form':form})
+
+##################################################################################################################
 
 
 def registre(request):
@@ -41,21 +105,18 @@ def registre(request):
     return render(request,'registre.html',context)
 
 
-def Userlogin(request):  
-  
-        if request.method == 'POST': 
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request , username=username, password=password)
-            if user is not None:
-             mylogin(request, user)
-             return redirect('home')
-            else:
-                messages.info(request, 'Credentials error')
-    
-        context = {}
-
-        return render(request , 'login.html', context )
+#def Userlogin(request):  
+       # if request.method == 'POST': 
+         #   username = request.POST.get('username')
+          #  password = request.POST.get('password')
+           # user = authenticate(request , username=username, password=password)
+           # if user is not None:
+            # mylogin(request, user)
+             #return redirect('home')
+           # else:
+             #   messages.info(request, 'Credentials error')
+        #context = {}
+       # return render(request , 'login.html', context )
     
 
 def Frnlogin(request):  
@@ -69,7 +130,7 @@ def Frnlogin(request):
                 if user is not None:
                     print("is  mewjud")
                     mylogin(request, user)
-                    return redirect('home')
+                    return redirect('indexx')
                 else:
                     messages.info(request, 'le fournisseur pas ici wallahi error')
             except:
@@ -81,12 +142,12 @@ def Frnlogin(request):
 
 def Userlogout(request):  
     logout(request)
-    return redirect('login')
+    return redirect('home')
   
        
 # l7oubi nedaniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
-
+ 
 def index(request):
     product_object = Product.objects.all()
     item_name = request.GET.get('item-name')

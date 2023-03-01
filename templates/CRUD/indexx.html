@@ -270,6 +270,9 @@
       }
     }
 
+    nav.navbar.bg-dark {
+      border-radius: 0 !important;
+  }
   </style>
 
 </head>
@@ -281,16 +284,20 @@
   <nav class="menu" tabindex="0">
     <div class="smartphone-menu-trigger"></div>
     <header class="avatar">
-        <br>
-        <br>
-        <br>
+        
+        <h4 class="text-white">  Commerçant</h4>
       <img src="{% static "images/adminpropic.png" %}" />
-      <br><br>
       <!-- <h6>Admin</h6> -->
       <h2 style="color:white;">{{request.user.first_name}}</h2>
     </header>
-    <ul>
-     
+    <ul class="mt-0">
+     <li>
+    
+      <a class="btn btn-primary text-white mt-2" role="button" href="create.html" >
+        Ajouter  des produits
+      </a>
+      
+     </li>
     </ul>
   </nav>
 
@@ -315,14 +322,62 @@
     <!-- nav end -->
 
 
+    <footer  class="bg-light">  
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <title>produit</title>
+          {% load static %}
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      </head>
+      <body>
+      <div class="container ">
+          <div class="row bg-light">
+                 
+      <table class="table table-hover bg-light text-dark">
+          <thead>
+          <tr>
+              
+              <th>Titre </th>
+              <th>Prix</th>
+              <th>description</th>
+              <th> category</th>
+              <th> image</th>
+              <th>Date ajoute</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for value in  prod %}
+              <tr>
+                 
+                  <td>{{ value.title }}</td>
+                  <td>{{ value.price }}</td>
+                  <td>{{ value.description }}</td>
+                  <td>{{ value.category }}</td>
+                  <td>{%  if value.image %}<img src="/media/{{value.image }}" class="img img-responsive" width="100px">{% endif %}</td>
+                  <td>{{ value.date_added }}</td>
+                  <td>
+                      <a class="btn btn-success btn-sm" href="edit.html">Modifier</a>
+                      <a class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer cet article !')" href="#"> Supprimer</a>
+                  </td>
+              </tr>
+          {% empty %}
+              <tr><td>No Record Found!</td></tr>
+          {% endfor %}
+          </tbody>
+      </table>
+          </div>
+      </div>
+      <br>
+      <br>
+     
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js" />
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" />
+      </body>
+      </html>
 
-    
-
-    
-    <footer>
-      
-<!--bled crud-->>
-      
+  
     </footer>
 
   </main>

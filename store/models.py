@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
@@ -19,26 +18,21 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ['-date_added']
+
     def __str__(self):
         return self.name    
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=200)
-    price = models.FloatField()
-    description = models.TextField()
-    category = ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
-    image = models.ImageField(upload_to='media/images/', default='media/images/default.png')
     fournisseur = models.ForeignKey(Fournisseur, on_delete=models.CASCADE) 
     title = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
-    category = models.ForeignKey(Category, related_name='categorie', on_delete=models.CASCADE) 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE) 
+    image = models.ImageField(upload_to='media/images/', default='media/images/default.png')
     date_added = models.DateTimeField(auto_now=True)
-    class Meta:
-        ordering = ['-date_added']  
+    # class Meta:
+    #     ordering = ['-date_added']  
 
     def __str__(self):
         return self.title           
@@ -54,17 +48,12 @@ class Commande(models.Model):
     zipcode = models.CharField(max_length=300)
     date_commande = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ['-date_commande']
+    # class Meta:
+    #     ordering = ['-date_commande']
 
 
     def __str__(self):
         return self.nom  
-    
-    
-    
-
-
 
 
 #entaaaaa eeeehhhhhhhhhhhh

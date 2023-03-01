@@ -1,7 +1,6 @@
-from operator import index
+# from operator import index
 from django.urls import path
 from . import views
-from django.db import models
 
 
 urlpatterns = [
@@ -13,7 +12,11 @@ urlpatterns = [
     path('register/' ,views.registre, name="register"),
     path('login/' ,views.Frnlogin, name="login"),
     path('logout/' ,views.Userlogout, name="logout"),
-    path('indexx/',views.CRUD,name="indexx"),
+    path('indexx/',views.affiche,name="indexx"),
+    path('update_stud/<int:id>', views.modifier),
+    
+   
+    
 ]
 
     
