@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
-        <form method="POST" class="post-form" action="/update_produit/{{id}}" enctype="multipart/form-data">
+        <form method="POST" class="post-form" action="/store/update_produit/{{prod.id}}/" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="container">
             <div class="form-group row">
@@ -19,19 +19,19 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Titre </label>
                 <div class="col-sm-4">
-                     {{ prod.title}}
+                     {{ form.title}}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Prix</label>
                 <div class="col-sm-4">
-                    {{prod.price }}
+                    {{form.price }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">description</label>
                 <div class="col-sm-4">
-                    {{ prod.description }}
+                    {{ form.description }}
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">category</label>
                     <div class="col-sm-4">
-                  <td>{{ prod.category }}</td>
+                  <td>{{ form.category }}</td>
                 
                     </div>
             </div>
@@ -48,9 +48,9 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">image</label>
                     <div class="col-sm-4">
-                            {{ prod.image }}
-                            {% if prod.image.value %}
-                                    <img src="/media/{{prod.image.value}}" class="img img-responsive" width="90px">
+                            {{ form.image }}
+                            {% if prod.image.url %}
+                                    <img src="{{prod.image.url}}" class="img img-responsive" width="90px">
                             {% endif %}
                     </div>
             </div>
@@ -58,7 +58,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Date ajoute</label>
                     <div class="col-sm-4">
-                            {{ prod.date_added}}
+                            {{ form.date_added}}
                     </div>
             </div>
 

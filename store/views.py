@@ -34,33 +34,33 @@ def delete_produit(request, id):
      prod.delete()
      # After the operation was Deleted
      messages.success(request, 'Deleted successful!')
-     return redirect("/indexx")
+     return redirect("/store/indexx")
 
 
-def modifier(requst, id):
+def edit_produit(requst, id):
     prod = Product.objects.get(id=id)
-    return render(requst, 'CRUD/edit.html',{'prod':prod})
+    form = ProdForm(instance=prod)
+    return render(requst, 'CRUD/edit.html',{'prod':prod,'form':form})
 
 
 def update_produit(request, id):
-     prod = Product.objects.get(id=id)
-     if request.method == "POST" :
+    prod = Product.objects.get(id=id)
+    if request.method == "POST" :
+        request.POST  = request.POST.copy()
+        request.POST["fournisseur"] = prod.fournisseur_id
         form =  ProdForm(request.POST, request.FILES, instance = prod)
+
         if form.is_valid():
             form.save()
             # After the operation was Update
             messages.success(request, 'Update successful!')
             # redirect to some other page
-            return redirect("/indexx")
+            return redirect("/store/indexx")
         # After the operation was fail
         message = 'Something we are wrong!'
-        return render(request, 'CRUD/edit.html',{'message':message,'prod':form})
-     else:
-         form = Product.objects.get(id=id)
-         prod = ProdForm(instance = form)
-         content = {'prod':prod,'id':id}
-         return render(request, 'CRUD/edit.html',content)
-
+        return redirect('/store/edit_produit/'+str(id)+'/')
+    else:
+        return redirect('/store/edit_produit/'+str(id)+'/')
 
 
 def create_produit(request):
@@ -68,25 +68,32 @@ def create_produit(request):
     # The request method 'POST' indicates
     # that the form was submitted
     if request.method == "POST":
-        # Create a form instance with the submitted data
-        form = ProdForm(request.POST, request.FILES)
-        # Validate the form
-
+    # Create a form instance with the submitted data
+    
+        request.POST  = request.POST.copy()
+        request.POST["fournisseur"] = "1"
+        
+        form =  ProdForm(request.POST, request.FILES)
+    # Validate the form
         if form.is_valid():
             try:
                 form.save()
                 # After the operation was successful
                 messages.success(request, "Created successful!")
                 # redirect to some other page
-                return redirect('/indexx')
+                return redirect('/store/indexx')
             except:
                 message = "Something we are wrong!"
                 form = ProdForm()
-            return render(request, 'CRUD/create.html',{'message':message,'form':form})
+                return render(request, 'CRUD/create.html',{'message':message,'form':form})
+        else :
+            form = ProdForm()
+            return render(request, 'CRUD/create.html',{'form':form})
+                
     else:
-        # Create an empty form instance
+    # Create an empty form instance
         form = ProdForm()
-    return render(request, 'CRUD/create.html',{'form':form})
+        return render(request, 'CRUD/create.html',{'form':form})
 
 ##################################################################################################################
 

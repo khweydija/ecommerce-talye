@@ -27,7 +27,8 @@ class CreateNewUser(UserCreationForm):
 class ProdForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['title',' price',' description','category','image ',' date_added ']
+        #fields = ['title',' price',' description','category','image ',' date_added ']
+        fields = "__all__"
         widgets = {
             "title": forms.TextInput(attrs={'class':'form-control','placeholder':'Enter name'}),
             "price": forms.NumberInput(attrs={'class':'form-control','min':'0','placeholder':'Enter Number'}),

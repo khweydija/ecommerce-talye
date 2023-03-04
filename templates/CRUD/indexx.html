@@ -293,7 +293,7 @@
     <ul class="mt-0">
      <li>
     
-      <a class="btn btn-primary text-white mt-2" role="button" href="create.html" >
+      <a class="btn btn-primary text-white mt-2" role="button" href="{% url 'create_produit' %}" >
         Ajouter  des produits
       </a>
       
@@ -358,8 +358,9 @@
                   <td>{%  if value.image %}<img src="/media/{{value.image }}" class="img img-responsive" width="100px">{% endif %}</td>
                   <td>{{ value.date_added }}</td>
                   <td>
-                      <a class="btn btn-success btn-sm" href="edit.html">Modifier</a>
-                      <a class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer cet article !')" href="#"> Supprimer</a>
+                      <a class="btn btn-success btn-sm" href="/store/edit_produit/{{value.id}}">Modifier</a>
+                      <a class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer cet article !')" 
+                        href="/store/delete_produit/{{value.id}}"> Supprimer</a>
                   </td>
               </tr>
           {% empty %}
